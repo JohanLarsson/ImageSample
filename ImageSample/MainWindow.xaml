@@ -1,10 +1,30 @@
 ﻿<Window x:Class="ImageSample.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:imageSample="clr-namespace:ImageSample"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="Window"
         Width="525"
-        Height="350">
+        Height="350"
+        d:DataContext="{d:DesignInstance imageSample:ViewModel}"
+        mc:Ignorable="d">
     <Grid>
-        <Image Source="Images/SampleImage.jpg"></Image>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding Count, StringFormat='count: {0}'}" />
+            <TextBlock Grid.Row="1" Text="{Binding Stopwatch.Elapsed.TotalSeconds, StringFormat='time: {0:F1}'}" />
+            <TextBlock Grid.Row="2" Text="{Binding CountPerMilliSecond, StringFormat='n / ms: {0:F0}'}" />
+        </Grid>
+        <Image Grid.Column="1" Source="Images/SampleImage.jpg" />
     </Grid>
 </Window>
