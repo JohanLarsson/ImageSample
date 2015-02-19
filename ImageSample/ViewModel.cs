@@ -9,10 +9,9 @@ namespace ImageSample
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private readonly int[] ints = new[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        private readonly int[] _ints = Enumerable.Range(0, 1000).ToArray();
         private int _count;
         private Stopwatch _stopwatch;
-        private double _countPerSecond;
 
         public ViewModel()
         {
@@ -20,6 +19,11 @@ namespace ImageSample
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public int[] Ints
+        {
+            get { return _ints; }
+        }
 
         public int Count
         {
@@ -43,9 +47,14 @@ namespace ImageSample
             }
         }
 
-        public double CountPerMilliSecond
+        public double CountPerMillisecond
         {
             get { return Count / Stopwatch.Elapsed.TotalMilliseconds; }
+        }
+
+        public double MicrosecondPerCount
+        {
+            get { return 1000 * Stopwatch.Elapsed.TotalMilliseconds / Count; }
         }
 
         [NotifyPropertyChangedInvocator]
@@ -60,14 +69,15 @@ namespace ImageSample
             _stopwatch = Stopwatch.StartNew();
             while (true)
             {
-                var items = ints.Select(x => new Item { Address = x.ToString() })
-                                .ToArray();
+                var items = _ints.Select(x => new Item { Address = x.ToString() })
+                                 .ToArray();
                 _count++;
-                if (Count % 10000 == 0)
+                if (_stopwatch.ElapsedMilliseconds % 100 == 0)
                 {
                     OnPropertyChanged("Count");
                     OnPropertyChanged("Stopwatch");
-                    OnPropertyChanged("CountPerMilliSecond");
+                    OnPropertyChanged("CountPerMillisecond");
+                    OnPropertyChanged("MicrosecondPerCount");
                 }
             }
         }
