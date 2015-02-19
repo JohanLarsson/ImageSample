@@ -27,7 +27,7 @@
             <TextBlock Grid.Row="1" Text="{Binding Stopwatch.Elapsed.TotalSeconds, StringFormat='time: {0:F1}'}" />
             <TextBlock Grid.Row="2" Text="{Binding CountPerMillisecond, StringFormat='n / ms: {0:F0}'}" />
             <TextBlock Grid.Row="3" Text="{Binding MicrosecondPerCount, StringFormat='µs / lap: {0:F0}'}" />
-            <TextBlock Grid.Row="4" Text="{Binding Ints.Length, StringFormat='length: {0}'}" />
+            <TextBox Grid.Row="4" Text="{Binding Length, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
         <Image Grid.Column="1" Source="Images/SampleImage.jpg" />
     </Grid>
